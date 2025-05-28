@@ -3,136 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Grand Senheng Temerloh Receipt</title>
+  <title>Grand Senheng Temerloh Receipt Generator</title>
   <style>
     /* Page size for A4 */
-    @page {
-      size: A4 portrait;
-      margin: 10mm;
-    }
-    /* Global Styles */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .container {
-      width: 100%;
-      max-width: 210mm;
-    }
-    .input-section {
-      width: 100%;
-      padding: 10px;
-    }
-    .receipt-section {
-      width: 100%;
-      padding-top: 20px;
-    }
-    .receipt {
-      background: #fff;
-      padding: 10px;
-      border: 1px solid #000;
-      font-size: 12px;
-      color: #000;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    /* Title style */
-    .receipt-title {
-      text-align: center;
-      font-weight: bold;
-      font-size: 18px; /* slightly larger */
-      margin-bottom: 10px;
-    }
-    /* Buttons */
-    button, select {
-      font-size: 14px;
-    }
-    .btn-more, .btn-calc, .btn-print {
-      padding: 8px 12px;
-      margin-top: 10px;
-      cursor: pointer;
-    }
-    .btn-calc {
-      background-color: #ffc107;
-      color: #000;
-      margin-right: 10px;
-    }
+    @page { size: A4 portrait; margin: 10mm; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+    .container { width: 100%; max-width: 210mm; }
+    .input-section { width: 100%; padding: 10px; }
+    .receipt-section { width: 100%; padding-top: 20px; }
+    .receipt { background: #fff; padding: 10px; border: 1px solid #000; font-size: 12px; color: #000; width: 100%; box-sizing: border-box; }
+    .receipt-title { text-align: center; font-weight: bold; font-size: 18px; margin-bottom: 10px; }
+    button, select { font-size: 14px; }
+    .btn-more, .btn-calc, .btn-print { padding: 8px 12px; margin-top: 10px; cursor: pointer; }
+    .btn-calc { background-color: #ffc107; color: #000; margin-right: 10px; }
     .btn-calc:hover { background-color: #e0a800; }
-    .btn-print {
-      background-color: #28a745;
-      color: #fff;
-    }
-    .btn-print:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
+    .btn-print { background-color: #28a745; color: #fff; }
+    .btn-print:disabled { background-color: #ccc; cursor: not-allowed; }
     .btn-print:hover:enabled { background-color: #1e7e34; }
-    /* Print styles */
-    @media print {
-      body { margin: 0; padding: 0; }
-      .input-section { display: none; }
-      .receipt {
-        border: none;
-        box-shadow: none;
-        width: 100%;
-        margin: 0;
-      }
-    }
-    /* Receipt table styles */
-    .receipt table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 10px 0;
-    }
-    .receipt table th,
-    .receipt table td {
-      padding: 4px;
-      text-align: left;
-      border-bottom: 1px dashed #ccc;
-    }
-    .terms {
-      font-size: 10px;
-      line-height: 1.2;
-      margin-top: 10px;
-    }
+    @media print { body { margin: 0; padding: 0; } .input-section { display: none; } .receipt { border: none; box-shadow: none; width: 100%; margin: 0; } }
+    .receipt table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    .receipt table th, .receipt table td { padding: 4px; text-align: left; border-bottom: 1px dashed #ccc; }
+    .terms { font-size: 10px; line-height: 1.2; margin-top: 10px; }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Input Section -->
     <div class="input-section">
       <h1>Cashier System</h1>
       <table id="input-table">
-        <colgroup>
-          <col style="width:35%;">
-          <col style="width:15%;">
-          <col style="width:25%;">
-          <col style="width:25%;">
-        </colgroup>
-        <thead>
-          <tr>
-            <th>Item Code</th>
-            <th>Qty</th>
-            <th>Price (RM)</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><input type="text" class="input-item" placeholder="Item Code" oninput="updateReceiptPreview()"></td>
-            <td><input type="number" class="input-qty" placeholder="Quantity" min="1" value="1" oninput="updateReceiptPreview()"></td>
-            <td><input type="number" class="input-price" placeholder="Price" min="0" step="0.01" oninput="updateReceiptPreview()"></td>
-            <td><button onclick="removeRow(this)">Remove</button></td>
-          </tr>
-        </tbody>
+        <colgroup><col style="width:35%;"><col style="width:15%;"><col style="width:25%;"><col style="width:25%;"></colgroup>
+        <thead><tr><th>Item Code</th><th>Qty</th><th>Price (RM)</th><th>Action</th></tr></thead>
+        <tbody><tr>
+          <td><input type="text" class="input-item" placeholder="Item Code" oninput="updateReceiptPreview()"></td>
+          <td><input type="number" class="input-qty" placeholder="Quantity" min="1" value="1" oninput="updateReceiptPreview()"></td>
+          <td><input type="number" class="input-price" placeholder="Price" min="0" step="0.01" oninput="updateReceiptPreview()"></td>
+          <td><button onclick="removeRow(this)">Remove</button></td>
+        </tr></tbody>
       </table>
-      <button type="button" class="btn-more" onclick="addMoreRow()">Add More Row</button>
-      <br>
+      <button class="btn-more" onclick="addMoreRow()">Add More Row</button><br>
       <select id="paymentMethod">
         <option value="" disabled selected>Select Payment Method</option>
         <option value="Cash">Cash</option>
@@ -142,122 +50,45 @@
         <option value="Bank Transfer">Bank Transfer</option>
       </select>
       <div class="action-buttons">
-        <button type="button" class="btn-calc" onclick="calculateTotal()">Calculate Total</button>
-        <button type="button" id="btnPrint" class="btn-print" disabled onclick="printReceipt()">Print Receipt</button>
+        <button class="btn-calc" onclick="calculateTotal()">Calculate Total</button>
+        <button id="btnPrint" class="btn-print" disabled onclick="printReceipt()">Print Receipt</button>
       </div>
       <p id="calcDisplay"></p>
     </div>
 
-    <!-- Receipt Preview Section -->
     <div class="receipt-section">
       <div class="receipt" id="receipt">
-        <!-- Logo -->
-        <img src="https://i0.wp.com/senheng.com/wp-content/uploads/2021/11/logo_1.webp" alt="Logo" style="width:200px; display:block; margin-bottom:10px;">
-        <!-- Title -->
+        <img src="https://i0.wp.com/senheng.com/wp-content/uploads/2021/11/logo_1.webp" alt="Logo" style="width:200px; margin-bottom:10px;">
         <div class="receipt-title">Receipt</div>
-        <!-- Store Info -->
         <h2 style="margin:0 0 5px;">Grand Senheng Temerloh</h2>
         <p style="font-size:12px; margin:2px 0;">90, 91 &amp; 92, Jalan Tengku Ismail, 28000 Temerloh</p>
         <p style="font-size:12px; margin:2px 0;">Tel: 601110886921</p>
-        <!-- Items Table -->
         <table>
-          <thead>
-            <tr>
-              <th>ITEM</th>
-              <th>QTY</th>
-              <th>UNIT (RM)</th>
-              <th>TOTAL (RM)</th>
-            </tr>
-          </thead>
+          <thead><tr><th>ITEM</th><th>QTY</th><th>UNIT (RM)</th><th>TOTAL (RM)</th></tr></thead>
           <tbody id="preview-rows"></tbody>
-          <tfoot>
-            <tr style="border-top:2px solid #000; font-weight:bold;">
-              <td colspan="3">Grand Total</td>
-              <td id="total"></td>
-            </tr>
-          </tfoot>
+          <tfoot><tr style="border-top:2px solid #000; font-weight:bold;"><td colspan="3">Grand Total</td><td id="total"></td></tr></tfoot>
         </table>
-        <!-- Payment & Timestamp -->
         <p>Payment Method: <span id="paymentMethodReceipt"></span></p>
         <p>Date: <span id="date"></span> Time: <span id="time"></span></p>
         <hr>
-        <!-- Terms -->
-        <p class="terms">
-          <strong>Terms &amp; Conditions:</strong> Promotional offers are exclusively available to Senheng PlusOne® members. All sales are final; no returns or refunds will be accepted after 3 days from the purchase date. Please retain this receipt for any warranty claims. Prices and product specifications are accurate at printing and subject to change without notice.
-        </p>
+        <p class="terms"><strong>Terms &amp; Conditions:</strong> Promotional offers are exclusively available to Senheng PlusOne® members. All sales are final; no returns or refunds will be accepted after 3 days from the purchase date. Please retain this receipt for any warranty claims. Prices and product specifications are accurate at printing and subject to change without notice.</p>
       </div>
     </div>
   </div>
 
   <script>
-    function formatCurrency(value) {
-      return Number(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
-    function addMoreRow() {
-      const tableBody = document.querySelector('#input-table tbody');
-      const newRow = document.createElement('tr');
-      newRow.innerHTML = `
-        <td><input type="text" class="input-item" placeholder="Item Code" oninput="updateReceiptPreview()"></td>
-        <td><input type="number" class="input-qty" placeholder="Quantity" min="1" value="1" oninput="updateReceiptPreview()"></td>
-        <td><input type="number" class="input-price" placeholder="Price" min="0" step="0.01" oninput="updateReceiptPreview()"></td>
-        <td><button onclick="removeRow(this)">Remove</button></td>
-      `;
-      tableBody.appendChild(newRow);
-    }
-    function removeRow(button) {
-      button.parentElement.parentElement.remove();
-      updateReceiptPreview();
-    }
-    function updateReceiptPreview() {
-      const rows = document.querySelectorAll('#input-table tbody tr');
-      const previewBody = document.getElementById('preview-rows');
-      previewBody.innerHTML = '';
-      let totalSum = 0;
-      rows.forEach(row => {
-        let code = row.querySelector('.input-item').value.trim();
-        const qty = parseFloat(row.querySelector('.input-qty').value) || 0;
-        const unitPrice = parseFloat(row.querySelector('.input-price').value) || 0;
-        if (code && qty > 0 && unitPrice > 0) {
-          const codeUpper = code.toUpperCase();
-          let displayCode = codeUpper;
-          if (codeUpper === 'RW') {
-            displayCode = 'RW-replacement warranty 2 years';
-          }
-          const rowTotal = qty * unitPrice;
-          totalSum += rowTotal;
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${displayCode}</td>
-            <td>${qty}</td>
-            <td>${formatCurrency(unitPrice)}</td>
-            <td>${formatCurrency(rowTotal)}</td>
-          `;
-          previewBody.appendChild(tr);
-        }
-      });
-      document.getElementById('total').innerText = formatCurrency(totalSum);
-    }
-    function calculateTotal() {
-      updateReceiptPreview();
-      const totalVal = parseFloat(document.getElementById('total').innerText.replace(/,/g, '')) || 0;
-      document.getElementById('calcDisplay').innerText = `Total: RM ${formatCurrency(totalVal)}`;
-      const paymentSelected = document.getElementById('paymentMethod').value;
-      document.getElementById('btnPrint').disabled = !(totalVal > 0 && paymentSelected);
-      document.getElementById('paymentMethodReceipt').innerText = paymentSelected;
-    }
-    document.getElementById('paymentMethod').addEventListener('change', () => {
-      const totalText = document.getElementById('total').innerText;
-      const totalVal = parseFloat(totalText.replace(/,/g, '')) || 0;
-      document.getElementById('btnPrint').disabled = !(totalVal > 0 && document.getElementById('paymentMethod').value);
-    });
-    function printReceipt() {
-      updateReceiptPreview();
-      const now = new Date();
-      document.getElementById('date').innerText = now.toLocaleDateString('en-GB');
-      document.getElementById('time').innerText = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-      window.print();
-    }
-    // initial setup
+    function formatCurrency(v){return Number(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+    function addMoreRow(){const b=document.querySelector('#input-table tbody');const r=document.createElement('tr');r.innerHTML=`
+      <td><input type="text" class="input-item" placeholder="Item Code" oninput="updateReceiptPreview()"></td>
+      <td><input type="number" class="input-qty" placeholder="Quantity" min="1" value="1" oninput="updateReceiptPreview()"></td>
+      <td><input type="number" class="input-price" placeholder="Price" min="0" step="0.01" oninput="updateReceiptPreview()"></td>
+      <td><button onclick="removeRow(this)">Remove</button></td>
+    `;b.appendChild(r);}  
+    function removeRow(btn){btn.closest('tr').remove();updateReceiptPreview();}
+    function updateReceiptPreview(){const rows=document.querySelectorAll('#input-table tbody tr'),body=document.getElementById('preview-rows');body.innerHTML='';let sum=0;rows.forEach(r=>{let code=r.querySelector('.input-item').value.trim(),u=code.toUpperCase(),qty=parseFloat(r.querySelector('.input-qty').value)||0,unit=parseFloat(r.querySelector('.input-price').value)||0;if(code&&qty>0&&unit>0){let disp=u==='RW'?'RW-replacement warranty 2 years':u;let tot=qty*unit;sum+=tot;let tr=document.createElement('tr');tr.innerHTML=`<td>${disp}</td><td>${qty}</td><td>${formatCurrency(unit)}</td><td>${formatCurrency(tot)}</td>`;body.appendChild(tr);}});document.getElementById('total').innerText=formatCurrency(sum);}    
+    function calculateTotal(){updateReceiptPreview();let t=parseFloat(document.getElementById('total').innerText.replace(/,/g,''))||0;document.getElementById('calcDisplay').innerText=`Total: RM ${formatCurrency(t)}`;let pm=document.getElementById('paymentMethod').value;document.getElementById('btnPrint').disabled = !(t>0 && pm);document.getElementById('paymentMethodReceipt').innerText=pm;}    
+    document.getElementById('paymentMethod').addEventListener('change',()=>{let t=parseFloat(document.getElementById('total').innerText.replace(/,/g,''))||0;document.getElementById('btnPrint').disabled=!(t>0 && document.getElementById('paymentMethod').value);});
+    function printReceipt(){updateReceiptPreview();let pm=document.getElementById('paymentMethod').value;document.getElementById('paymentMethodReceipt').innerText=pm;let now=new Date();document.getElementById('date').innerText=now.toLocaleDateString('en-GB');document.getElementById('time').innerText=now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true});window.print();}
     updateReceiptPreview();
   </script>
 </body>
